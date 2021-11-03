@@ -15,10 +15,6 @@ fil <- filter(df, SHRCD %in% vecshrcd & PRIMEXCH %in% vecpri)
 fil['market_cap'] <- abs(fil['PRC']) * fil['SHROUT']
 View(fil)
 
-#find start and end month of sample period
-large_date = max(df['date'])
-small_date = min(df['date'])
-
 #remove scientific notation
 options(scipen = 999)
 
@@ -28,8 +24,8 @@ View(datedf)
 
 #Sort data in descending order and get top 20 companies
 descdate <- datedf %>% arrange(desc(market_cap))
-desc2 <- head(descdate, 20)
-write.csv(desc2,'top10.csv', row.names = TRUE)
+top20 <- head(descdate, 20)
+write.csv(top20,'top20.csv', row.names = TRUE)
 
 #check and replace NA values
 any(is.na(fil))
@@ -91,7 +87,7 @@ write.csv(fil_french, 'french_data_out.csv', row.names = TRUE)
 mean(as.numeric(unlist(fil_french$Mkt)))
 mean(as.numeric(unlist(Ret_vw_df$RET.vw)))
 cor(fil_french$Mkt, Ret_vw_df$RET.vw)
-
+ 
 show(getwd())
 write.csv(Ret_vw_df,"Ret_vw.csv", row.names = TRUE)
 
